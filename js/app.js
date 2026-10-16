@@ -287,6 +287,21 @@
   function onScroll() { var y = window.scrollY, p = $("product").getBoundingClientRect(); sticky.classList.toggle("show", y > 700 && !(p.top < 200 && p.bottom > 300)); }
   window.addEventListener("scroll", onScroll, { passive: true }); onScroll();
 
+  /* ---------- founders: click to open details ---------- */
+  var founders = document.querySelectorAll(".founder");
+  founders.forEach(function (f) {
+    var btn = f.querySelector(".f-head"), lbl = f.querySelector(".f-lbl");
+    btn.addEventListener("click", function () {
+      var willOpen = !f.classList.contains("open");
+      founders.forEach(function (o) {
+        var on = o === f && willOpen;
+        o.classList.toggle("open", on);
+        o.querySelector(".f-head").setAttribute("aria-expanded", on ? "true" : "false");
+        var l = o.querySelector(".f-lbl"); l.textContent = on ? l.getAttribute("data-open") : l.getAttribute("data-closed");
+      });
+    });
+  });
+
   /* ---------- motion: header, progress, reveal, accordion ---------- */
   var reduce = window.matchMedia && matchMedia("(prefers-reduced-motion: reduce)").matches;
   var hdr = document.querySelector("header.site"), prog = $("prog"), ticking = false;
@@ -299,7 +314,7 @@
   window.addEventListener("scroll", function () { if (!ticking) { ticking = true; requestAnimationFrame(onFrame); } }, { passive: true });
   onFrame();
 
-  var groups = [".idea .big", ".uses .label", ".uses h2", ".uses .lede", ".use", ".uses-water", ".uses-cta", ".trio>div", ".steps3 h2", ".tl>div", ".how .label", ".how h2", ".how .lede", ".explorer>*", ".gallery", ".buybox", ".specs>*", "#track .track-grid>*", ".about-grid>*", ".founders li", ".faq-cols>*", ".contact-grid>*"];
+  var groups = [".idea .big", ".uses .label", ".uses h2", ".uses .lede", ".use", ".uses-water", ".uses-cta", ".trio>div", ".steps3 h2", ".tl>div", ".how .label", ".how h2", ".how .lede", ".explorer>*", ".gallery", ".buybox", ".specs>*", "#track .track-grid>*", ".about-grid>*", ".fs-head>*", ".founder", ".faq-cols>*", ".contact-grid>*"];
   var targets = [];
   groups.forEach(function (sel) {
     document.querySelectorAll(sel).forEach(function (el, i) { el.setAttribute("data-reveal", ""); el.style.setProperty("--d", (Math.min(i, 5) * 0.09).toFixed(2) + "s"); targets.push(el); });
