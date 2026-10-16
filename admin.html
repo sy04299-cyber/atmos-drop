@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<meta name="color-scheme" content="light">
+<title>Atmos Drop | Admin</title>
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<style>
+:root{--ink:#0B1220;--muted:#4A5668;--rule:#DCE3EB;--wash:#F2F6F9;--accent:#0A6C95;--deep:#071B2E;--danger:#A32727;--leaf:#1E7A4B;color-scheme:light}
+*{box-sizing:border-box}
+body{margin:0;background:var(--wash);color:var(--ink);font:16px/1.5 "Segoe UI",system-ui,-apple-system,sans-serif}
+header{background:var(--deep);color:#fff;padding:14px 20px;display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+header b{font-size:1.15rem}
+main{max-width:1280px;margin:0 auto;padding:20px}
+.card{background:#fff;border:1px solid var(--rule);border-radius:12px;padding:20px}
+.login{max-width:400px;margin:60px auto}
+label{display:block;font-weight:600;margin:12px 0 4px;font-size:.92rem}
+input,select{font:inherit;padding:10px 12px;border:1px solid var(--rule);border-radius:8px;width:100%;background:#fff;color:var(--ink)}
+button{font:600 .95rem inherit;cursor:pointer;border:0;border-radius:8px;padding:10px 16px}
+.primary{background:var(--accent);color:#fff}.line{background:#fff;border:1px solid var(--ink);color:var(--ink)}.sm{padding:6px 10px;font-size:.85rem}
+.dark{background:transparent;border:1px solid rgba(255,255,255,.5);color:#fff}
+.err{color:var(--danger);margin-top:10px;min-height:1.3em}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:16px}
+.stat b{display:block;font-size:1.6rem}.stat span{color:var(--muted);font-size:.88rem}
+.bar{display:flex;flex-wrap:wrap;gap:10px;margin:14px 0}
+.bar input{flex:1;min-width:200px}.bar select{width:auto}
+.tabs{display:flex;gap:8px;margin-bottom:6px}
+.tabs button{background:#fff;border:1px solid var(--rule)}.tabs button[aria-selected="true"]{background:var(--ink);color:#fff}
+.wrap{overflow-x:auto;border:1px solid var(--rule);border-radius:10px;background:#fff}
+table{width:100%;border-collapse:collapse;min-width:980px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--rule);text-align:left;vertical-align:top;font-size:.9rem}
+th{background:var(--wash)}
+td small{color:var(--muted);display:block}
+td input.note{min-width:160px}
+.hint{color:var(--muted);font-size:.88rem;margin-top:10px}
+[hidden]{display:none!important}
+</style>
+</head>
+<body>
+<header><b>Atmos Drop admin</b><span><span id="who"></span> <button class="dark sm" id="logout" hidden>Sign out</button></span></header>
+<main>
+  <div class="card login" id="loginCard">
+    <h2 style="margin-top:0">Sign in</h2>
+    <form id="loginForm">
+      <label for="em">Email</label><input id="em" type="email" autocomplete="username" required>
+      <label for="pw">Password</label><input id="pw" type="password" autocomplete="current-password" required>
+      <div class="err" id="loginErr" role="alert"></div>
+      <button class="primary" type="submit" style="width:100%;margin-top:6px">Sign in</button>
+    </form>
+  </div>
+  <div id="app" hidden>
+    <div class="stats" id="stats"></div>
+    <div class="tabs" role="tablist"><button role="tab" id="tabO" aria-selected="true">Orders</button><button role="tab" id="tabL" aria-selected="false">Enquiries</button></div>
+    <div class="bar">
+      <input id="q" type="search" placeholder="Search name, email, phone, city or reference" aria-label="Search">
+      <select id="sf" aria-label="Filter by status"></select>
+      <button class="line" id="refresh">Refresh</button>
+      <button class="primary" id="csv">Export CSV</button>
+    </div>
+    <div class="wrap"><table><thead id="thead"></thead><tbody id="tbody"></tbody></table></div>
+    <p class="hint" id="empty" hidden>No records yet.</p>
+    <p class="hint">Tip: export a CSV regularly as your own backup. Orders move from <b>payment_claimed</b> to <b>reserved</b> only after you confirm the payment in your payment dashboard.</p>
+  </div>
+</main>
+<script src="config.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>
